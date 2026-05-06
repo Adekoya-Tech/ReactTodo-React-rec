@@ -3,7 +3,7 @@ import styles from "../../styles/modules/modal.module.scss";
 import { MdOutlineClose } from "react-icons/md";
 import Button from "../Button";
 import { useDispatch } from "react-redux";
-import { addTodo } from "../../slices/todoSlice";
+import { addTodo, updateTodo } from "../../slices/todoSlice";
 import { v4 as uuid } from "uuid";
 import toast from "react-hot-toast";
 
@@ -42,8 +42,22 @@ function TodoModals({ type, modalOpen, setModalOpen, todo }) {
         setModalOpen(false);
       }
       if (type === "update") {
-        console.log("updating task");
-      }
+       if(todo.title !== title || todo.status !== status){
+        dispatch(
+            updateTodo({
+          ...todo,
+          title,
+          status  
+        
+       })
+    );
+       
+}else{
+    toast.success("No changes Made")
+}
+}
+    }else{
+        toast.error("title should't be empty");
     }
   };
 
